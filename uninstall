@@ -1,3 +1,5 @@
 #!/bin/bash
 sudo apt-get remove $1
-echo "--$1" >> ~/frombase.txt 
+if [ $? -eq 0 ]
+then echo "--$1" >> ~/frombase.txt
+fi
