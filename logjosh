@@ -1,5 +1,0 @@
-#!/usr/bin/expect -f
-spawn ssh Joshua
-expect "password:"
-send "kUShomoo\n"
-interact
