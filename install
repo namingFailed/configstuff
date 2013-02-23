@@ -1,3 +1,7 @@
 #!/bin/bash
 sudo apt-get install $1
-echo $1 >> packages.txt
+if [ $? -eq 0 ] 
+then  echo $1 >> ~/packages.txt; 
+echo "++$1" >> ~/frombase.txt;
+fi
+
