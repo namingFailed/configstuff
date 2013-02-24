@@ -1,0 +1,11 @@
+++ git
+++build-essential
+++apport
+++xloadimage
+++mercurial
+++inotify-tools
+++virtualbox
+++virtualbox
+++dkms
+--virtualbox
+--virtualbox-dkms
