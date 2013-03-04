@@ -123,3 +123,4 @@ alias ins=/home/clare/projects/configstuff/install
 alias unin=/home/clare/projects/configstuff/uninstall
 alias off='sudo shutdown -h now'
 alias xterm=' xterm -font -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*'
+alias list="nmap -sP 192.168.0.0/24"

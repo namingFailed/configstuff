@@ -7,3 +7,10 @@ inotify-tools
 virtualbox
 virtualbox
 dkms
+lynx-cur
+virtualbox
+ubuntu-desktop
+acpi
+texmaker
+nmap
+incron

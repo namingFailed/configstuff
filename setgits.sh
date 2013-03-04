@@ -18,6 +18,17 @@ do
         for line in `cat ./repos.txt`
         do
         git clone $user@$gaddr/~$user/repos/$line/.git
+        if [ $line -eq 'vim' ]
+            cd ./vim
+            git submodule init
+            git submodule update
+            ln -s /home/$user/repos/vim /home/$user/.vim
+            cd ..
+        fi
+        if [ $line -eq 'configstuff' ]
+            ln -s /home/$user/repos/.bashrc /home/$user/.bashrc
+            ln -s /home/$user/repos/.vimrc /home/$user/.vimrc
+        fi
         done;
         exit 0;
     fi

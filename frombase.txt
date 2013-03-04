@@ -9,3 +9,12 @@
 ++dkms
 --virtualbox
 --virtualbox-dkms
+++lynx-cur
+++virtualbox
+--brasero
+--bluez*
+++ubuntu-desktop
+++acpi
+++texmaker
+++nmap
+++incron
