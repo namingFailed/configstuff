@@ -109,8 +109,10 @@ function parse_git_branch () {
        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
    }
 function git_changes () {
-    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working
-    directory clean)" ]] && echo "*"
+    if [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working
+    directory clean)" ]]; then 
+        echo "*"
+    fi
 }
 
 RED="\[\033[0;31m\]"
