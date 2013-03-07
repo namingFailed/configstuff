@@ -14,3 +14,6 @@ acpi
 texmaker
 nmap
 incron
+tmux
+alsaplayer-common
+bash-completion

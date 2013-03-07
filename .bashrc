@@ -108,13 +108,17 @@ export EDITOR=/usr/bin/vim
 function parse_git_branch () {
        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
    }
+function git_changes () {
+    [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working
+    directory clean)" ]] && echo "*"
+}
 
 RED="\[\033[0;31m\]"
 YELLOW="\[\033[0;33m\]"
 GREEN="\[\033[0;32m\]"
 NO_COLOUR="\[\033[0m\]"
 
-PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)$NO_COLOUR\$"
+PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)$NO_COLOUR\$(git_changes)\$"
 
 export COLOURTERM=xterm
 export TERM=xterm
