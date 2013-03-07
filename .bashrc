@@ -113,13 +113,17 @@ function git_changes () {
         echo "*"
     fi
 }
+function hg_branch () {
+    echo `hg branch 2> /dev/null`;
+}
+
 
 RED="\[\033[0;31m\]"
 YELLOW="\[\033[0;33m\]"
 GREEN="\[\033[0;32m\]"
 NO_COLOUR="\[\033[0m\]"
 
-PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)$NO_COLOUR\$(git_changes)\$"
+PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\$(git_changes)\$"
 
 export COLOURTERM=xterm
 export TERM=xterm
