@@ -2,16 +2,22 @@
 #Script to check if the repos need updating
 for name in $(find $repodir -maxdepth 1 -type d -follow)
 do
-    cd $name
+   cd $name
     if [[ -e ".git" ]]
     then
         git remote update
-        if [[ -n $(git diff --stat refs/remotes/laptop/master | grep "changed") ]]
-        then
-            echo -e "\033[0;32m $name \033[0m changes" # print in green the folder name
-        fi
+        gsb=`git show-branch *master`
+        
+        for line in "$gsb"
+        do
+            branch=`git show-ref | cut -f 2 -d ' '`
+            gsbc=$(echo "$gsb" | cut -f 2 -d ']')
+            if [[ -z $(git log | grep "$gsbc") ]]
+            then
+                echo -e "\033[0;32m $name $branch $gsbc \033[0m "
+            fi
+        done
     fi
     cd $OLDPWD
-    
 done
 
