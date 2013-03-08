@@ -109,9 +109,13 @@ function parse_git_branch () {
        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
    }
 function git_changes () {
-    if [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]]; then 
+    gstat=$(git status 2> /dev/null | tail -n1)
+    if [[ -n $gstat ]];
+    then
+    if [[ $gstat != "nothing to commit (working directory clean)" ]]; then 
         echo "*"
     fi
+fi
 }
 function hg_branch () {
     echo `hg branch 2> /dev/null`;
@@ -133,3 +137,8 @@ alias unin=/home/clare/projects/configstuff/uninstall
 alias off='sudo shutdown -h now'
 alias xterm=' xterm -font -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*'
 alias list="nmap -sP 192.168.0.0/24"
+
+t=`cat ~/.sys_facts | grep "repo_path"`
+repodir=${t:9}
+export repodir=$(echo $repodir | sed -e s@\$HOME@"${HOME}"@)
+$repodir/configstuff/gitupdate.sh
