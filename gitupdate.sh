@@ -14,7 +14,7 @@ do
             gsbc=$(echo "$gsb" | cut -f 2 -d ']')
             if [[ -z $(git log | grep "$gsbc") ]]
             then
-                echo -e "\033[0;32m $name $branch $gsbc \033[0m "
+                echo -e "\033[0;32m $name $branch $gsbc \033[0m\17 "
             fi
         done
     fi
