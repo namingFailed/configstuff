@@ -1,23 +1,31 @@
 #!/bin/bash
-#Script to check if the repos need updating
+changes=false
 for name in $(find $repodir -maxdepth 1 -type d -follow)
 do
    cd $name
     if [[ -e ".git" ]]
     then
         git remote update
-        gsb=`git show-branch *master`
-        
-        for line in "$gsb"
+        for line in `git show-ref master | grep remotes | cut -f2 -d " "`
         do
-            branch=`git show-ref | cut -f 2 -d ' '`
-            gsbc=$(echo "$gsb" | cut -f 2 -d ']')
-            if [[ -z $(git log | grep "$gsbc") ]]
+            if [[ -n  $(`git rev-list --max-count=1 ^master "$line" --pretty --cherry-pick --no-merges`) ]]
             then
-                echo -e "\033[0;32m $name $branch $gsbc \033[0m\17 "
+                echo "$line has changes"
+                repochange=true
             fi
         done
+        if [[ $repochange == true ]]
+        then
+            echo "$PWD"
+            changes=true
+        fi
+        repochange=false
     fi
     cd $OLDPWD
 done
+
+if [[ $changes == false ]]
+then
+    echo "All the gits in $repodir are up to date on this host"
+fi
 
