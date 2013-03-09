@@ -5,17 +5,11 @@ kword="function"
 kwordl=`expr ${#kword} + 1`
 endlen=`expr ${#kwordl} + ${#fname} - 1 `
 
-infun="false"
-
-#flines=`cat $file | grep -n "^function"`
-#fnstart=`cat $file | grep -n "^function $fname"`
-#fnllen=`expr index "$fnstart" ":"`
-#fnstart=${fnstart:0:($fnllen-1)}
+infun=false
 
 while read line;
 do
     t=${line:$kwordl:$endlen}
-#    echo $t
     if [[ "$infun" == "true" ]]
     then
         echo "$line"
@@ -27,8 +21,7 @@ do
     if [[ "$t" == "$fname" ]]
     then
         echo "$line"
-        infun="true"
+        infun=true
     fi
     
 done < <(cat $file)
-echo $infun
