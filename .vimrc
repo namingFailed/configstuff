@@ -19,9 +19,10 @@ set smartindent
 set laststatus=2
 filetype plugin on
 filetype indent on
-set textwidth=77
+set textwidth=0
 set cino=g0
 set nowrap
+set wrapmargin=0
 set modeline
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()

@@ -6,6 +6,8 @@
 export COLOURTERM=xterm
 export TERM=xterm
 
+export PATH=$PATH:~/Downloads/android-sdk-linux/
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
