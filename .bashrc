@@ -131,16 +131,17 @@ NO_COLOUR="\[\033[0m\]"
 
 PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\$(git_changes)\$"
 
-export COLOURTERM=xterm
-export TERM=xterm
-alias bat='acpi -b'
-alias ins=/home/clare/projects/configstuff/install
-alias unin=/home/clare/projects/configstuff/uninstall
-alias off='sudo shutdown -h now'
-alias xterm=' xterm -font -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*'
-alias list="nmap -sP 192.168.0.0/24"
-
 t=`cat ~/.sys_facts | grep "repo_path"`
 repodir=${t:9}
 export repodir=$(echo $repodir | sed -e s@\$HOME@"${HOME}"@)
+
+export COLOURTERM=xterm
+export TERM=xterm
+alias bat='acpi -b'
+alias ins=$repodir/configstuff/install
+alias unin=$repodir/configstuff/uninstall
+alias off='sudo shutdown -h now'
+alias xterm='xterm -font -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*'
+alias list="nmap -sP 192.168.0.0/24"
+
 $repodir/configstuff/gitupdate.sh
