@@ -20,3 +20,4 @@ bash-completion
 ant
 openjdk-7-jdk
 wireless-tools
+awesome
