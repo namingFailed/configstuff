@@ -1,7 +1,0 @@
-configstuff
-wmii
-libixp
-vim
-cwubi
-lupin
-
