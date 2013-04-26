@@ -1,4 +1,0 @@
-sys_role Laptop
-repo_list *
-repo_path ~/packages
-virtual false
