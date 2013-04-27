@@ -9,6 +9,8 @@ if has('statusline')
     set statusline+=%-7.(%l,%c%V%)\ %<%P
 endif
 
+map ' :
+
 set number
 set expandtab
 set tabstop=4
