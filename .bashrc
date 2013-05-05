@@ -111,13 +111,30 @@ function parse_git_branch () {
        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 function git_changes () {
-    gstat=$(git status 2> /dev/null | tail -n1)
-    if [[ -n $gstat ]];
+    gstat=$(git status --porcelain )
+    untrack=false
+    unadd=false
+    for line in $gstat
+    do
+        if [[ $line == "??"* ]]
+        then
+            untrack=true;
+        fi 
+        if [[ $line == "MM"* ]]
+        then
+            unadd=true;
+        fi
+    done
+    if $untrack;
     then
-    if [[ $gstat != "nothing to commit (working directory clean)" ]]; then 
-        echo "*"
+        echo -n "?"
+        untrack=false
     fi
-fi
+    if $unadd;
+    then
+        echo -n -e "\033[0;31m*\033[0m"
+        unadd=false
+    fi
 }
 function hg_branch () {
     echo `hg branch 2> /dev/null`;
