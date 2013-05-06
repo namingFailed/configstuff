@@ -1,5 +1,5 @@
 #!/bin/bash
 sudo apt-get remove $1
 if [ $? -eq 0 ]
-then echo "--$1" >> ~/projects/configstuff/frombase.txt
+then echo "--$1" >> ~/sync/configstuff/frombase.txt
 fi

@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt-get install $1
 if [ $? -eq 0 ] 
-then  echo $1 >> ~/projects/configstuff/packages.txt; 
-echo "++$1" >> ~/projects/configstuff/frombase.txt;
+then  echo $1 >> ~/sync/configstuff/packages.txt; 
+echo "++$1" >> ~/sync/configstuff/frombase.txt;
 fi
 
