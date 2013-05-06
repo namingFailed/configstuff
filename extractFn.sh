@@ -11,6 +11,7 @@ kwordl=`expr ${#kword} + 1`
 endlen=`expr ${#kwordl} + ${#fname} - 1 `
 
 infun=false
+havefun=false
 
 while read line;
 do
@@ -27,6 +28,13 @@ do
     then
         echo "$line"
         infun=true
+        havefun=true
     fi
     
 done < <(cat $file)
+if ! $havefun;
+then
+    echo "$fname was not in file" 1>&2
+    exit 2
+fi
+exit 0
