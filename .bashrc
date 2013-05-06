@@ -126,6 +126,10 @@ function git_changes () {
             then
                 unadd=true;
             fi
+            if [[ "$line" =~ ^'M' ]]
+            then
+                unadd=true;
+            fi
         done
         if $untrack;
         then

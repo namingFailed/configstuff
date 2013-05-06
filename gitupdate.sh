@@ -58,4 +58,4 @@ if [[ $changes == false ]]
 then
     echo "All the gits in $repodir are up to date on this host [as far as we can tell]"
 fi
-
+export GITCHECKED=true
