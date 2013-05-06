@@ -113,24 +113,22 @@ function parse_git_branch () {
 function git_changes () {
     if [[ -e .git ]]
     then
-        gstat=$(git status --porcelain )
-        untrack=false
+        b=`git status --porcelain`
         unadd=false
-        for line in $gstat
-        do
-            if [[ $line == "??"* ]]
-            then
-                untrack=true;
-            fi 
-            if [[ $line == "MM"* ]]
-            then
-                unadd=true;
-            fi
-            if [[ "$line" =~ ^' M' ]]
-            then
-                unadd=true;
-            fi
-        done
+        untrack=false
+        mod=false
+        if [[ `echo "$b" | grep  ^" M"` ]]
+        then
+            unadd=true
+        fi
+        if [[ `echo "$b" | grep ^"MM"` ]]
+        then
+            mod=true
+        fi
+        if [[ `echo "$b" | grep ^"??"` ]]
+        then
+            untrack=true
+        fi
         if $untrack;
         then
             echo -n "?"
@@ -140,6 +138,11 @@ function git_changes () {
         then
             echo -n -e "\033[0;31m*\033[0m"
             unadd=false
+        fi
+        if $mod;
+        then
+            echo -n -e "\033[0;33m*\033[0m"
+            mod=false
         fi
     fi
 }
@@ -167,6 +170,7 @@ alias unin=$repodir/configstuff/uninstall
 alias off='sudo shutdown -h now'
 alias xterm='xterm -font -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*'
 alias list="nmap -sP 192.168.0.0/24"
+alias checkin="dpkg -s $1 | grep Status"
 
 if [ $GITCHECKED ]
 then
