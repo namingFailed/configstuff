@@ -1,4 +1,9 @@
 #!/bin/bash
+if [[ $# -ne 2 ]]
+then
+    echo "usage:  extractFn.sh file function_name" 1>&2
+    exit 1
+fi
 fname=$2
 file=$1
 kword="function"
