@@ -126,7 +126,7 @@ function git_changes () {
             then
                 unadd=true;
             fi
-            if [[ "$line" =~ ^'M' ]]
+            if [[ "$line" =~ ^' M' ]]
             then
                 unadd=true;
             fi
@@ -168,4 +168,7 @@ alias off='sudo shutdown -h now'
 alias xterm='xterm -font -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*'
 alias list="nmap -sP 192.168.0.0/24"
 
-$repodir/configstuff/gitupdate.sh
+if [ $GITCHECKED ]
+then
+    $repodir/configstuff/gitupdate.sh
+fi

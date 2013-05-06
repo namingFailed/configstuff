@@ -1,6 +1,6 @@
 #!/bin/bash
 changes=false
-
+export GITCHECKED=true
 echo "Checking git repos for updates"
 
 for name in $(find $repodir -maxdepth 1 -type d -follow)
@@ -58,4 +58,3 @@ if [[ $changes == false ]]
 then
     echo "All the gits in $repodir are up to date on this host [as far as we can tell]"
 fi
-export GITCHECKED=true
