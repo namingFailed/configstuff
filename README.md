@@ -1,6 +1,6 @@
-
 configstuff
 ===========
+*Use at YOUR OWN RISK*
 
 Some of my config stuff, useful scripts and dotfiles.
 
