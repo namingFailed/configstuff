@@ -1,6 +1,6 @@
 #!/bin/bash
 changes=false
-export GITCHECKED=true
+echo "gitchecked" >> $HOME/.sys_facts
 echo "Checking git repos for updates"
 
 for name in $(find $repodir -maxdepth 1 -type d -follow)

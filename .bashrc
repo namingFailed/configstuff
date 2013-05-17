@@ -106,6 +106,10 @@ fi
 
 export EDITOR=/usr/bin/vim
 
+RED='\[\033[0;31m\]'
+YELLOW='\[\033[0;33m\]'
+GREEN='\[\033[0;32m\]'
+NO_COLOUR='\[\033[0m\]'
 
 function parse_git_branch () {
        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -136,12 +140,12 @@ function git_changes () {
         fi
         if $unadd;
         then
-            echo -n -e "\033[0;31m*\033[0m"
+            echo -n  "*"
             unadd=false
         fi
         if $mod;
         then
-            echo -n -e "\033[0;33m*\033[0m"
+            echo -n "#"
             mod=false
         fi
     fi
@@ -151,12 +155,8 @@ function hg_branch () {
 }
 
 
-RED="\[\033[0;31m\]"
-YELLOW="\[\033[0;33m\]"
-GREEN="\[\033[0;32m\]"
-NO_COLOUR="\[\033[0m\]"
 
-PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\$(git_changes)\$"
+PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$GREEN\$(git_changes)$NO_COLOUR\$"
 
 t=`cat ~/.sys_facts | grep "repo_path"`
 repodir=${t:9}
@@ -172,7 +172,9 @@ alias xterm='xterm -font -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*'
 alias list="nmap -sP 192.168.0.0/24"
 alias checkin="dpkg -s $1 | grep Status"
 
-if [ $GITCHECKED ]
+check=`tail -n1 $HOME/.sys_facts` 
+echo $check
+if [[ ! ($check == "gitchecked") ]]
 then
     $repodir/configstuff/gitupdate.sh
 fi
