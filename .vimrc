@@ -26,6 +26,8 @@ set cino=g0
 set nowrap
 set wrapmargin=0
 set modeline
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+if has("pathogen")
+    call pathogen#runtime_append_all_bundles()
+    call pathogen#helptags()
+endif
 colors elflord
