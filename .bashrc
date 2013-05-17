@@ -137,7 +137,7 @@ function git_changes () {
         then
             untrack=true
         fi
-        if [ $untrack ] || [ $unadd ] || [ $mod ]
+        if  $untrack || $unadd || $mod 
         then
             echo -n -e "$f_NO_COLOUR["    
         
@@ -185,7 +185,6 @@ alias list="nmap -sP 192.168.0.0/24"
 alias checkin="dpkg -s $1 | grep Status"
 
 check=`tail -n1 $HOME/.sys_facts` 
-echo $check
 if [[ ! ($check == "gitchecked") ]]
 then
     $repodir/configstuff/gitupdate.sh
