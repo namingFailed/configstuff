@@ -110,6 +110,10 @@ RED='\[\033[0;31m\]'
 YELLOW='\[\033[0;33m\]'
 GREEN='\[\033[0;32m\]'
 NO_COLOUR='\[\033[0m\]'
+f_RED='\033[0;31m'
+f_YELLOW='\033[0;33m'
+f_GREEN='\033[0;32m'
+f_NO_COLOUR='\033[0m'
 
 function parse_git_branch () {
        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -133,6 +137,10 @@ function git_changes () {
         then
             untrack=true
         fi
+        if [ $untrack ] || [ $unadd ] || [ $mod ]
+        then
+            echo -n -e "$f_NO_COLOUR["    
+        
         if $untrack;
         then
             echo -n "?"
@@ -140,23 +148,27 @@ function git_changes () {
         fi
         if $unadd;
         then
-            echo -n  "*"
+            printf "$f_RED*"
             unadd=false
         fi
         if $mod;
         then
-            echo -n "#"
+            printf "$f_GREEN#"
             mod=false
         fi
+        echo -n -e "$f_NO_COLOUR]"
+    fi
     fi
 }
 function hg_branch () {
     echo `hg branch 2> /dev/null`;
 }
+function set_bash_prompt(){
+    PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\[$(git_changes)\]\$"
+}
 
+PROMPT_COMMAND=set_bash_prompt
 
-
-PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$GREEN\$(git_changes)$NO_COLOUR\$"
 
 t=`cat ~/.sys_facts | grep "repo_path"`
 repodir=${t:9}
