@@ -167,6 +167,7 @@ function hg_branch () {
 }
 function set_bash_prompt(){
     PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\[$(git_changes)\]$NO_COLOUR\$ \e\[s"
+    trap 'echo -ne "\e]2;$BASH_COMMAND\007"' DEBUG
 }
 
 PROMPT_COMMAND=set_bash_prompt
