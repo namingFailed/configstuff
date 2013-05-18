@@ -26,7 +26,7 @@ set cino=g0
 set nowrap
 set wrapmargin=0
 set modeline
-if has("pathogen")
+if filereadable(expand("~/.vim/autoload/pathogen.vim"))
     call pathogen#runtime_append_all_bundles()
     call pathogen#helptags()
 endif
