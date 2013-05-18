@@ -122,9 +122,23 @@ function git_changes () {
     if [[ -e .git ]]
     then
         b=`git status --porcelain`
+        c=`git status`
         unadd=false
         untrack=false
         mod=false
+        remotes=false
+        if [[ `echo "$c" | grep "# Your branch is ahead"` ]] 
+        then
+            echo -n -e "$f_GREEN" 
+            echo -n -e "A"
+            remotes=true
+        fi
+        if [[ `echo "$c" | grep "have diverged"` ]]
+        then
+            echo -n -e "\033[33;1m"
+            echo -n -e "D"
+            remotes=true
+        fi
         if [[ `echo "$b" | grep  ^" M"` ]]
         then
             unadd=true
@@ -158,7 +172,10 @@ function git_changes () {
         fi
         echo -n -e "$f_NO_COLOUR]"
     else
-        echo -n -e "$f_GREEN="
+        if ! $remotes
+        then
+            echo -n -e "$f_GREEN="
+        fi
     fi
     fi
 }
@@ -167,7 +184,7 @@ function hg_branch () {
 }
 function set_bash_prompt(){
     PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\[$(git_changes)\]$NO_COLOUR\$ \e\[s"
-    trap '{ if [[ "$BASH_COMMAND" == "set_bash_prompt" ]]; then echo -ne "\e]2;$HOST\007"; else echo -ne " \e]2;$BASH_COMMAND\007"; fi }' DEBUG
+    trap '{ if [[ ! ("$BASH_COMMAND" == "set_bash_prompt") ]]; then echo -ne "\e]2;$BASH_COMMAND\007"; fi }' DEBUG
 }
 
 PROMPT_COMMAND=set_bash_prompt
