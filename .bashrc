@@ -143,7 +143,7 @@ function git_changes () {
         
         if $untrack;
         then
-            echo -n "?"
+            echo -n "$f_NO_COLOUR?"
             untrack=false
         fi
         if $unadd;
@@ -157,6 +157,8 @@ function git_changes () {
             mod=false
         fi
         echo -n -e "$f_NO_COLOUR]"
+    else
+        echo -n -e "$f_GREEN="
     fi
     fi
 }
@@ -164,7 +166,7 @@ function hg_branch () {
     echo `hg branch 2> /dev/null`;
 }
 function set_bash_prompt(){
-    PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\[$(git_changes)\]\$"
+    PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\[$(git_changes)\]$NO_COLOUR\$ \e\[s"
 }
 
 PROMPT_COMMAND=set_bash_prompt
@@ -179,7 +181,7 @@ export TERM=xterm
 alias bat='acpi -b'
 alias ins=$repodir/configstuff/install
 alias unin=$repodir/configstuff/uninstall
-alias off='$repodir/configstuff/bash_shutdown'
+alias off='$repodir/configstuff/bash_shutdown.sh'
 alias xterm='xterm -font -*-fixed-medium-r-*-*-18-*-*-*-*-*-iso8859-*'
 alias list="nmap -sP 192.168.0.0/24"
 alias checkin="dpkg -s $1 | grep Status"
