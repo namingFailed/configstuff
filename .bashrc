@@ -106,18 +106,27 @@ fi
 
 export EDITOR=/usr/bin/vim
 
-RED='\[\033[0;31m\]'
-YELLOW='\[\033[0;33m\]'
-GREEN='\[\033[0;32m\]'
-NO_COLOUR='\[\033[0m\]'
-f_RED='\033[0;31m'
-f_YELLOW='\033[0;33m'
-f_GREEN='\033[0;32m'
-f_NO_COLOUR='\033[0m'
+#RED='\[\033[0;31m\]'
+#YELLOW='\[\033[0;33m\]'
+#GREEN='\[\033[0;32m\]'
+#NO_COLOUR='\[\033[0m\]'
+#f_RED='\033[0;31m'
+#f_YELLOW='\033[0;33m'
+#f_GREEN='\033[0;32m'
+#f_NO_COLOUR='\033[0m'
 
-function parse_git_branch () {
-       git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
+RED=$(tput setaf 1)
+YELLOW=$(tput setaf 3)
+GREEN=$(tput setaf 2)
+NO_COLOUR=$(tput sgr0)
+f_RED=$RED
+f_YELLOW=$YELLOW
+f_GREEN=$GREEN
+f_NO_COLOUR=$NO_COLOUR
+
+#function parse_git_branch () {
+#       git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#}
 function git_changes () {
     if [[ -e .git ]]
     then
@@ -155,35 +164,35 @@ function git_changes () {
         then
             echo -n -e "$f_NO_COLOUR["    
         
-        if $untrack;
-        then
-            echo -n "$f_NO_COLOUR?"
-            untrack=false
+            if $untrack;
+            then
+                echo -n "$f_NO_COLOUR?"
+                untrack=false
+            fi
+            if $unadd;
+            then
+                echo -n "$f_RED*"
+                unadd=false
+            fi        
+            if $mod;
+            then
+                printf "$f_GREEN#"
+                mod=false
+            fi
+            echo -n -e "$f_NO_COLOUR]"
+        else
+            if ! $remotes
+            then
+                echo -n -e "$f_GREEN="
+            fi
         fi
-        if $unadd;
-        then
-            printf "$f_RED*"
-            unadd=false
-        fi
-        if $mod;
-        then
-            printf "$f_GREEN#"
-            mod=false
-        fi
-        echo -n -e "$f_NO_COLOUR]"
-    else
-        if ! $remotes
-        then
-            echo -n -e "$f_GREEN="
-        fi
-    fi
     fi
 }
 function hg_branch () {
     echo `hg branch 2> /dev/null`;
 }
 function set_bash_prompt(){
-    PS1="$GREEN\u@\h$RED:\w$YELLOW\$(parse_git_branch)\$(hg_branch)$NO_COLOUR\[$(git_changes)\]$NO_COLOUR\$ \e\[s"
+    PS1="\[$GREEN\]\u@\h\[$RED\]:\w\[$YELLOW\]\[\$(. /home/clare/projects/configstuff/git_bashprompt_functions.sh branch)\]\[\$(hg_branch)\]\[$NO_COLOUR\]\[$(git_changes)\]\[$NO_COLOUR\]\$ \e\[s"
     trap '{ if [[ ! ("$BASH_COMMAND" == "set_bash_prompt") ]]; then echo -ne "\e]2;$BASH_COMMAND\007"; fi }' DEBUG
 }
 
