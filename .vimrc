@@ -1,9 +1,13 @@
 function! SyntaxItem()
-    return synIDattr(synID(line("."),col("."),1),"name")
+    let res = synIDattr(synID(line("."),col("."),1),"name")
+    if !empty(res)
+        return "(".res.")"
+    endif
+    return res
 endfunction
 
 if has('statusline')
-    set statusline+=(%{SyntaxItem()})
+    set statusline+=%{SyntaxItem()}
     set statusline+=%f
     set statusline+=%=
     set statusline+=%-7.(%l,%c%V%)\ %<%P
@@ -26,6 +30,7 @@ set cino=g0
 set nowrap
 set wrapmargin=0
 set modeline
+set fileencodings=utf-8
 if filereadable(expand("~/.vim/autoload/pathogen.vim"))
     call pathogen#runtime_append_all_bundles()
     call pathogen#helptags()
